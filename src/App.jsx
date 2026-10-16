@@ -2809,8 +2809,8 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Product Grid - 2 columns on mobile for maximum space efficiency! */}
-              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3.5">
+              {/* Product Grid - responsive, clean professional card widths */}
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-2.5 sm:gap-3.5">
                 {filteredPosProducts.length === 0 ? (
                   <div className="col-span-full bg-white rounded-2xl border border-dashed border-slate-300 p-8 text-center flex flex-col items-center justify-center shadow-sm">
                     <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
@@ -2877,56 +2877,67 @@ export default function App() {
                     return (
                       <div
                         key={prod.id}
-                        className={`bg-white rounded-xl sm:rounded-2xl border p-2 sm:p-3.5 flex flex-col justify-between transition shadow-xs hover:shadow-md ${inCartItem
+                        className={`bg-white rounded-xl sm:rounded-2xl border p-2.5 sm:p-3.5 flex flex-col justify-between transition-all duration-200 shadow-xs hover:shadow-md ${inCartItem
                           ? 'border-emerald-500 ring-2 ring-emerald-500/20'
-                          : 'border-slate-200'
+                          : 'border-slate-200 hover:border-slate-300'
                           } ${isOut ? 'opacity-60' : ''}`}
                       >
                         <div>
-                          <div className="flex items-start justify-between gap-1">
-                            <span className="text-[9px] sm:text-[11px] font-mono text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded truncate max-w-[65px] sm:max-w-[100px]">
+                          {/* Top Badges: SKU & Stock Status */}
+                          <div className="flex items-center justify-between gap-1">
+                            <span className="text-[10px] font-mono text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded truncate max-w-[85px] sm:max-w-[100px]">
                               {prod.sku}
                             </span>
                             <span
-                              className={`text-[9px] sm:text-[11px] font-semibold px-1.5 py-0.5 rounded-full shrink-0 ${isOut
+                              className={`text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${isOut
                                 ? 'bg-rose-100 text-rose-700'
                                 : isLow
                                   ? 'bg-amber-100 text-amber-800'
                                   : 'bg-emerald-50 text-emerald-700'
                                 }`}
                             >
-                              {isOut ? 'Out' : `${prod.stock} ${prod.unit}`}
+                              {isOut ? 'Out of Stock' : `${prod.stock} ${prod.unit}`}
                             </span>
                           </div>
 
-                          <h4 className="font-bold text-slate-900 text-xs sm:text-sm mt-1 sm:mt-1.5 leading-snug line-clamp-2 min-h-[2rem]">
+                          {/* Product Name */}
+                          <h4 className="font-bold text-slate-900 text-xs sm:text-sm mt-1.5 leading-snug line-clamp-2 min-h-[2.3rem]">
                             {prod.name}
                           </h4>
                           <p className="text-[10px] sm:text-xs text-slate-400 mt-0.5 truncate">{prod.category}</p>
                         </div>
 
-                        <div className="mt-2 pt-2 border-t border-slate-100">
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
-                            <div>
-                              <span className="text-xs sm:text-base font-extrabold text-emerald-700">
+                        {/* Bottom Actions Area */}
+                        <div className="mt-2.5 pt-2 border-t border-slate-100">
+                          {/* Price & In-Cart Status */}
+                          <div className="flex items-baseline justify-between gap-1 mb-2">
+                            <div className="flex items-baseline gap-0.5 min-w-0 truncate">
+                              <span className="text-sm sm:text-base font-extrabold text-emerald-700 tracking-tight">
                                 {formatRs(prod.sellingPrice)}
                               </span>
-                              <span className="text-[10px] sm:text-xs text-slate-400">/{prod.unit}</span>
+                              <span className="text-[10px] sm:text-xs text-slate-400 font-medium shrink-0">/{prod.unit}</span>
                             </div>
 
-                            <button
-                              onClick={() => addToCart(prod, 1)}
-                              disabled={isOut}
-                              className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 active:scale-95 disabled:bg-slate-300 text-white px-2 py-1.5 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1 shadow-xs transition"
-                            >
-                              <Plus className="w-3.5 h-3.5 shrink-0" />
-                              <span>Add 1</span>
-                            </button>
+                            {inCartItem && (
+                              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full shrink-0 border border-emerald-200">
+                                {inCartItem.qty} in cart
+                              </span>
+                            )}
                           </div>
+
+                          {/* Clean Full-Width Add Button */}
+                          <button
+                            onClick={() => addToCart(prod, 1)}
+                            disabled={isOut}
+                            className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs hover:shadow-sm transition select-none cursor-pointer"
+                          >
+                            <Plus className="w-3.5 h-3.5 shrink-0" strokeWidth={2.5} />
+                            <span className="whitespace-nowrap font-bold">Add 1 ({prod.unit})</span>
+                          </button>
 
                           {/* Loose Weight Presets (250g, 500g, 1kg, 5kg) */}
                           {isLoose && !isOut && (
-                            <div className="grid grid-cols-4 gap-1 pt-1.5 mt-1 border-t border-slate-100/70">
+                            <div className="grid grid-cols-4 gap-1 pt-1.5 mt-1.5 border-t border-slate-100">
                               {[
                                 { label: '250g', val: 0.25 },
                                 { label: '500g', val: 0.5 },
@@ -2936,7 +2947,7 @@ export default function App() {
                                 <button
                                   key={preset.label}
                                   onClick={() => addToCart(prod, preset.val)}
-                                  className="py-1 px-0.5 rounded bg-slate-50 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 text-[9px] sm:text-[10px] font-bold border border-slate-200 text-center transition active:scale-95"
+                                  className="py-1 px-0.5 rounded-lg bg-slate-50 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-200 text-slate-700 text-[9px] sm:text-[10px] font-bold border border-slate-200 text-center transition active:scale-95 cursor-pointer"
                                 >
                                   +{preset.label}
                                 </button>
@@ -4384,8 +4395,8 @@ export default function App() {
           MODAL 1: 80MM THERMAL RECEIPT PREVIEW
       ========================================== */}
       {activeReceipt && (
-        <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200">
+        <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto print:static print:bg-transparent print:p-0 print:m-0 print:overflow-visible">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-200 print:border-none print:shadow-none print:rounded-none print:max-w-none print:w-auto print:m-0 print:p-0">
             {/* Modal Controls (Hidden when printing) */}
             <div className="p-4 bg-slate-900 text-white flex items-center justify-between print:hidden">
               <div className="flex items-center gap-2">
@@ -4394,14 +4405,16 @@ export default function App() {
               </div>
               <div className="flex items-center gap-2">
                 <button
+                  type="button"
                   onClick={() => window.print()}
-                  className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5"
+                  className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm active:scale-95 transition cursor-pointer"
                 >
                   <Printer className="w-4 h-4" /> Print Slip
                 </button>
                 <button
+                  type="button"
                   onClick={() => setActiveReceipt(null)}
-                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300"
+                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -4409,7 +4422,7 @@ export default function App() {
             </div>
 
             {/* Printable 80mm Receipt Area */}
-            <div className="p-6 font-mono text-xs text-slate-900 space-y-3 bg-white">
+            <div id="printable-receipt" className="p-6 font-mono text-xs text-slate-900 space-y-3 bg-white print:p-0 print:m-0">
               <div className="text-center border-b border-dashed border-slate-400 pb-3">
                 <h2 className="text-base font-extrabold uppercase tracking-tight">
                   {storeInfo.name}
