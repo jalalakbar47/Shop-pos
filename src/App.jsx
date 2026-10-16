@@ -1892,6 +1892,10 @@ export default function App() {
                 <RefreshCw className={`w-3.5 h-3.5 ${sheetsSyncing ? 'animate-spin text-emerald-400' : ''}`} />
                 <span>{sheetsSyncing ? 'Syncing...' : 'Sync Cloud Database'}</span>
               </button>
+
+              <div className="text-[10px] text-slate-500 text-center font-medium pt-1">
+                Shop POS v1.0.0 &bull; Production
+              </div>
             </div>
           </div>
         </div>
@@ -2114,6 +2118,10 @@ export default function App() {
             <RefreshCw className={`w-3.5 h-3.5 ${sheetsSyncing ? 'animate-spin text-emerald-400' : ''}`} />
             <span>{sheetsSyncing ? 'Syncing...' : 'Sync Cloud Database'}</span>
           </button>
+
+          <div className="text-[10px] text-slate-500 text-center font-medium pt-1">
+            Shop POS v1.0.0 &bull; Production
+          </div>
         </div>
       </aside>
 

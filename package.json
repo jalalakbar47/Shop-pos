@@ -1,7 +1,14 @@
 {
-  "name": "new-folder--2-",
+  "name": "shop-pos",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Smart Grocery & Retail POS System with Mobile-First UX, Multi-Store Branding, Khata Udhaar Ledger, and Google Sheets Cloud Database Sync",
+  "author": "Jalal Akbar (jalalakbar47)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jalalakbar47/Shop-pos.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
